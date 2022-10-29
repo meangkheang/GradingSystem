@@ -2,7 +2,7 @@
 @section('content')
     <div class="h-1/3">
         <x-card-grid>
-            <x-card title="Students" total="3000">
+            <x-card title="Students" total="400">
                 {{-- logo --}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-people-fill text-gray-500" viewBox="0 0 16 16">
