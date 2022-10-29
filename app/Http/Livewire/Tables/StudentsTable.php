@@ -11,7 +11,7 @@ class StudentsTable extends Component
     use WithPagination;
 
     public $search = '';
-    public $campus = '1';
+    public $campus_id = '1';
     public $shift_id = '1';
 
     public function render()
@@ -19,6 +19,7 @@ class StudentsTable extends Component
         return view('livewire.tables.students-table',[
             'students' => Student::search($this->search)
                         ->where('shift_id',$this->shift_id)
+                        ->where('campus_id',$this->campus_id)
                         ->simplePaginate(10)
         ]);
     }

@@ -6,9 +6,9 @@
 
         <div class="flex gap-2 w-1/2">
                 <select id="campus"
+                wire:model = "campus_id"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
-                <option selected>Choose a campus</option>
-                <option value="1">UC1</option>
+                <option selected value="1">UC1</option>
                 <option value="2">UC2</option>
             </select>
             <select id="shift"
