@@ -56,8 +56,6 @@ class LoginController extends Controller
 
         session()->put('user',$user);
 
-
-
         return redirect()->route('user.index')->with('message','Log in account successfully');
     }
 

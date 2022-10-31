@@ -34,6 +34,14 @@ class UserController extends Controller
 
         $this->AuthorizeUser();
 
+        $check = \App\Models\User::find(session('user.id'))->request_student;
+        
+        if($check){
+            session()->put('already_request_as_student',true);
+        }else{
+            session()->remove('already_request_as_student');
+        }
+
         return view('partial.student.dashboard2');
     }
    
@@ -168,6 +176,7 @@ class UserController extends Controller
             'shift_id' =>$request->shift_id,
             'campus_id' =>$request -> campus_id 
         ]);
+
 
         return redirect()->route('user.test')->with('message','Sent Request successfully');
         

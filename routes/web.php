@@ -68,6 +68,7 @@ Route::group([],function(){
         Route::get('/',[AdminController::class,'index'])->name('index');
         Route::get('/users',[AdminController::class,'users'])->name('users');
         Route::get('/request_students',[AdminController::class,'request_students'])->name('request_students');
+        Route::post('/request_students',[AdminController::class,'store_request_students'])->name('store_request_students');
         Route::get('/teachers',[AdminController::class,'teachers'])->name('teachers');
 
 

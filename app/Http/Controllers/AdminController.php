@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RequestStudent;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -110,10 +112,48 @@ class AdminController extends Controller
     public function request_students()
     {
         $this->AuthorizeUser();
+
+        $requested_as_students = RequestStudent::all(); 
         
-        return view('partial.admin.RequesteStudents');
+        return view('partial.admin.RequesteStudents',compact('requested_as_students'));
     }
 
-   
+    public function store_request_students(Request $request)
+    {
+        $hasCheck = $request->has('is_accepted');
+
+        if(!$hasCheck)
+        {
+            return redirect()->route('admin.request_students');
+        }
+
+        
+
+
+        foreach($request->is_accepted as $index)
+        {
+            $student = RequestStudent::find($index);
+
+            Student::create([
+                'student_id' => \Illuminate\Support\Str::random(6),
+                'user_id' => $student->user_id,
+                'phone' =>$student->phone,
+                'name' =>$student->name,
+                'email' => $student->email,
+                'major_id' => $student->major_id,
+                'sex' => $student->sex,
+                'campus_id' => $student->campus_id,
+                'shift_id' => $student->shift_id,
+                'dob' => $student->dob,
+                'pob' => $student->pob
+            ]);
+
+            RequestStudent::find($student->id)->delete();
+        }
+
+        
+
+        return redirect()->route('admin.request_students')->with('message','Accepted Successfully!!');
+    }
 
 }

@@ -7,9 +7,12 @@
                 </h1>
         </div>
 
+        @if (session('user.student') != null)
         <div>
             <button class="px-4 py-2 rounded bg-indigo-600 text-white" wire:click="RedirectToJoinClassRoute" >Join Class</button>
         </div>
+        @endif
+      
 
     </div>
 

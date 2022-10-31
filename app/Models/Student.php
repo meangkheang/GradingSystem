@@ -9,6 +9,8 @@ class Student extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id','student_id','phone','name','email','major_id','sex','campus_id','shift_id','dob','pob'];
+
     public static function search($search){
 
        return empty($search) ? static::query():

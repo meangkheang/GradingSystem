@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\StudentClass;
+use App\Models\SubjectClass;
 use Illuminate\Http\Request;
 
 class ClassController extends Controller
@@ -24,7 +26,7 @@ class ClassController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -35,13 +37,20 @@ class ClassController extends Controller
      */
     public function store(Request $request)
     {
-        
         $request->validate([
-            'class_tag' => $request->class_tag,
+            'class_tag' => 'required'
         ]);
 
+        $class = SubjectClass::where('class_tag', $request->class_tag)->first();
 
-        return redirect()->route('user.class.index')->with('message','Joined classe successfully');
+        //if class not found
+        if(!$class) return redirect()->route('user.class.index')->with('error','Class not found');
+
+        // StudentClass::create([
+        //     'student_id' => 
+        // ]);
+
+        return redirect()->route('user.test')->with('message','Joined classe successfully');
     }
 
     /**
