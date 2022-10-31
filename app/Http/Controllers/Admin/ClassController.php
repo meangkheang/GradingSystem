@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
+use App\Models\SubjectClass;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Shift;
+use App\Models\Subject;
 
-class AdminController extends Controller
+class ClassController extends Controller
 {
-   
-    public function AuthorizeUser()
-    {
-        $usertype = session('user.usertype.type.name'); 
-
-        if($usertype != "Admin"){
-            abort(401);
-        }
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +18,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $this->AuthorizeUser();
-        return view('partial.admin.dashboard');
+
+        $classes = SubjectClass::all();
+
+        return view('partial.admin.Class.index',compact('classes'));
     }
 
     /**
@@ -33,7 +31,17 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        $teachers = User::whereHas('usertype',function ($query){
+            $query->where('type_id' , 2);
+            
+        })->get();
+
+        $subjects = Subject::all();
+        $shifts = Shift::all();
+
+
+        return view('partial.admin.Class.create',compact('teachers','subjects','shifts'));
+
     }
 
     /**
@@ -44,7 +52,25 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'bach' => 'required',
+            'year'  => 'required',
+            'subject_id' => 'required',
+            'teacher_id' => 'required',
+        ]);
+        
+
+        SubjectClass::create([
+            'class_tag' => \Illuminate\Support\Str::random(6),
+            'subject_id' => $request->subject_id,
+            'teacher_id' => $request->teacher_id,
+            'bach' => $request->bach,
+            'shift_id' => $request->shift_id,
+            'year' => $request->year 
+        ]);
+
+        return redirect()->route('admin.classes.index')->with('message','Sent Request successfully');
+
     }
 
     /**
@@ -91,29 +117,4 @@ class AdminController extends Controller
     {
         //
     }
-
-    public function users()
-    {
-        $this->AuthorizeUser();
-
-        return view('partial.admin.users');
-    }
-
-    public function teachers()
-    {
-        $this->AuthorizeUser();
-        
-        return view('partial.admin.teachers');
-    }
-
-
-    public function request_students()
-    {
-        $this->AuthorizeUser();
-        
-        return view('partial.admin.RequesteStudents');
-    }
-
-   
-
 }

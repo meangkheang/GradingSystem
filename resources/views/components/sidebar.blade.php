@@ -26,8 +26,9 @@
 
                     @if (session('usertype') == 'Admin')
                         {{-- if admin loggin --}}
+                      
                         <li>
-                            <a href="#"
+                            <a href="{{ route('admin.index') }}"
                                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
                                 <svg class="w-6 h-6 text-gray-500 group-hover:text-gray-900 transition duration-75"
                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +39,27 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="{{ route('admin.request_students') }}"
+                                class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
+                                <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
+                                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="ml-3">Requested as Students</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.classes.index') }}"
+                                class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                                    <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
+                                  </svg>
+                                <span class="ml-5">Create Class</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.users') }}"
                                 class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                 <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +70,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="{{ route('admin.teachers') }}"
                                 class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                 <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -165,7 +186,7 @@
                     {{-- if student loggin --}}
                     @if (session('usertype') == 'User')
                         <li>
-                            <a href="#"
+                            <a href="{{ route('user.index') }}"
                                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
                                 <svg class="w-6 h-6 text-gray-500 group-hover:text-gray-900 transition duration-75"
                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -176,7 +197,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="{{ route('user.view_score') }}"
                                 class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                 <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -184,6 +205,16 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                                 <span class="ml-3 flex-1 whitespace-nowrap">View Score</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="{{ route('user.request_as_student') }}"
+                                class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                                  </svg>
+                                <span class="ml-3 flex-1 whitespace-nowrap">Request as student</span>
                             </a>
                         </li>
                     @endif

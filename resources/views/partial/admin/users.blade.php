@@ -1,4 +1,6 @@
 @extends('layout')
 @section('content')
-    admin dashboard
+
+    <livewire:admin.tables.users/>
+
 @endsection

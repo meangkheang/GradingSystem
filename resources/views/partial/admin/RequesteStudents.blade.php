@@ -1,4 +1,6 @@
 @extends('layout')
 @section('content')
-    admin dashboard
+
+<h1>Requested Students</h1>
+
 @endsection

@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Models\Type;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\UserType;
+use Carbon\Carbon;
 
-class AdminController extends Controller
+class UsersController extends Controller
 {
-   
-    public function AuthorizeUser()
-    {
-        $usertype = session('user.usertype.type.name'); 
-
-        if($usertype != "Admin"){
-            abort(401);
-        }
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +18,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $this->AuthorizeUser();
-        return view('partial.admin.dashboard');
+        //
     }
 
     /**
@@ -44,7 +39,31 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+
+            'name' =>'required|min:2',
+            'email' => 'required|email',
+            'type_id' => 'required'
+        ]);      
+
+
+        //find user via email and name
+        $user = User::where('email',$request->email)->where('name',$request->name)->first();
+        
+        //update found user
+        UserType::find($user->id)->update([
+            'user_id' => $user->id,
+            'type_id' => $request->type_id
+        ]);
+
+
+        User::find($user->id)->update([
+            'name'=> $request->name,
+            'email' => $request->email,
+            'updated_at' => Carbon::now()
+        ]);
+
+        return redirect()->route('admin.users.edit',$user)->with('message','updated successfully');
     }
 
     /**
@@ -53,9 +72,9 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('partial.admin.users.show', compact('user'));
     }
 
     /**
@@ -64,9 +83,11 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $types = Type::all();
+
+        return view('partial.admin.users.edit',compact('user','types'));
     }
 
     /**
@@ -91,29 +112,4 @@ class AdminController extends Controller
     {
         //
     }
-
-    public function users()
-    {
-        $this->AuthorizeUser();
-
-        return view('partial.admin.users');
-    }
-
-    public function teachers()
-    {
-        $this->AuthorizeUser();
-        
-        return view('partial.admin.teachers');
-    }
-
-
-    public function request_students()
-    {
-        $this->AuthorizeUser();
-        
-        return view('partial.admin.RequesteStudents');
-    }
-
-   
-
 }

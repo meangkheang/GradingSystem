@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Major;
+use App\Models\RequestStudent;
 use App\Models\UserType;
 use App\Traits\CheckUser;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    public function view_score()
+    {
+        return view('partial.student.viewscore');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -122,5 +129,47 @@ class UserController extends Controller
         session()->flush();
 
         return redirect()->route('register');
+    }
+
+    public function request_student()
+    {
+        $majors = Major::all();
+
+        return view('partial.student.RequestAsStudent',compact('majors'));
+    }
+
+    public function store_request_student(Request $request)
+    {
+        $request->validate([
+
+            'phone' =>'required',
+            'user_id' => 'required|numeric',
+            'email' => 'required|email',
+            'name' => 'required|min:2',
+            'major_id' => 'required|numeric',
+            'sex' => 'required|numeric',
+            'campus_id' => 'required|numeric',
+            'shift_id' => 'required|numeric',
+            'dob' => 'required|date',
+            'pob' => 'required'
+
+        ]);
+
+        RequestStudent::create([
+            'user_id' => $request->user_id,
+            'phone' => $request->phone,
+            'name' => $request->name,
+            'email' =>$request->name,
+            'major_id' => $request->major_id,
+            'is_accepted' =>0 ,
+            'sex' =>$request->sex,
+            'pob' =>$request->pob ,
+            'dob' => $request->dob,
+            'shift_id' =>$request->shift_id,
+            'campus_id' =>$request -> campus_id 
+        ]);
+
+        return redirect()->route('user.test')->with('message','Sent Request successfully');
+        
     }
 }

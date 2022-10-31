@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\ClassController;
+use App\Models\User;
 use App\Http\Middleware\IdentifyUser;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,7 +61,31 @@ Route::group([],function(){
 Route::group([],function(){
 
     Route::group(['prefix' => 'admin','as' => 'admin.'],function(){
+
         Route::get('/',[AdminController::class,'index'])->name('index');
+        Route::get('/users',[AdminController::class,'users'])->name('users');
+        Route::get('/request_students',[AdminController::class,'request_students'])->name('request_students');
+        Route::get('/teachers',[AdminController::class,'teachers'])->name('teachers');
+
+
+        Route::group(['prefix' => 'classes' , 'as' => 'classes.'],function(){
+
+            Route::get('/',[\App\Http\Controllers\Admin\ClassController::class,'index'])->name('index');
+            Route::get('/create',[\App\Http\Controllers\Admin\ClassController::class,'create'])->name('create');
+            Route::post('/create',[\App\Http\Controllers\Admin\ClassController::class,'store'])->name('store');
+
+        });
+        
+
+
+        //users route
+        Route::group(['prefix' => 'users' , 'as' => 'users.'],function(){
+
+            Route::get('/show/{user}',[\App\Http\Controllers\Admin\UsersController::class,'show'])->name('show');
+            Route::get('/edit/{user}',[\App\Http\Controllers\Admin\UsersController::class,'edit'])->name('edit');
+            Route::post('/edit',[\App\Http\Controllers\Admin\UsersController::class,'store'])->name('store');
+        });
+
 
     });
 
@@ -78,6 +104,9 @@ Route::group([],function(){
 
         Route::get('/',[UserController::class,'index'])->name('index');
         Route::get('/subjects',[UserController::class,'test'])->name('test');
+        Route::get('/viewscore',[UserController::class,'view_score'])->name('view_score');
+        Route::get('/request_student',[UserController::class,'request_student'])->name('request_as_student');
+        Route::post('/request_student',[UserController::class,'store_request_student'])->name('store.request_as_student');
 
     });
 });
