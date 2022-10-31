@@ -1,6 +1,4 @@
 @extends('layout')
 @section('content')
-
-    <livewire:teacher.tables.students-grading/>
-
+    Dashboard2
 @endsection

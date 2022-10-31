@@ -2,6 +2,6 @@
 @section('content')
     
     
-    <livewire:tables.students-table>
+    <livewire:teacher.tables.students-table>
 
 @endsection

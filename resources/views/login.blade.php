@@ -14,39 +14,42 @@
         <div class="flex text-center h-screen justify-evenly items-center">
             <div class="w-full md:w-2/3 lg:w-1/2 mx-auto md:mx-0">
 
+                @if (session()->has('message'))
+                    <div>
+                        <h1 class="px-4 py-2 rounded bg-red-600 text-white">{{ session('message') }}</h1>
+                    </div>
+                @endif
+               
+
                 <div class="bg-white p-10 flex flex-col w-full shadow-xl rounded-xl">
 
                     <h2 class="flex items-center text-2xl font-bold text-gray-800 text-left mb-5">
-                        Login
+                        <a href="/">Home </a>
+
+                        / Login
                     </h2>
-                    <form action="" class="w-full">
+                    <form action="/login" class="w-full" method="POST">
+                        @csrf
+
                         <div id="input" class="flex flex-col w-full my-5">
-                            <label for="username" class="text-gray-500 mb-2 text-left">Username</label>
-                            <input type="text" id="username" placeholder="Please insert your username"
+                            <label for="username" class="text-gray-500 mb-2 text-left">Email</label>
+                            <input type="email" name="email" id="username" placeholder="Please insert your username"
                                 class="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-lg" />
                         </div>
                         <div id="input" class="flex flex-col w-full my-5">
                             <label for="password" class="text-gray-500 mb-2 text-left">Password</label>
-                            <input type="password" id="password" placeholder="Please insert your password"
+                            <input type="password" name="password" id="password" placeholder="Please insert your password"
                                 class="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:shadow-lg" />
                         </div>
                         <div id="button" class="flex flex-col w-full my-5">
-                            <button type="button"
+                            <button type="submit"
                                 class="w-full py-4 bg-blue-500 rounded-lg text-white hover:bg-blue-600 hover:ring-black hover:ring-2">
-                                <div class="flex flex-row items-center justify-center">
-                                    <div class="mr-2">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <div class="font-bold">Sigin</div>
-                                </div>
+                                
+                                Sign in
+
                             </button>
                             <div class="flex justify-evenly mt-5">
-                                <a href="/signup"
+                                <a href="/register"
                                     class="w-full text-center font-medium text-gray-500 hover:underline">Sign Up!</a>
                             </div>
                         </div>

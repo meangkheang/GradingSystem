@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Tables;
+namespace App\Http\Livewire\Teacher\Tables;
 
 use App\Models\Student;
 use Livewire\Component;
@@ -16,7 +16,7 @@ class StudentsTable extends Component
 
     public function render()
     {
-        return view('livewire.tables.students-table',[
+        return view('livewire.teacher.tables.students-table',[
             'students' => Student::search($this->search)
                         ->where('shift_id',$this->shift_id)
                         ->where('campus_id',$this->campus_id)

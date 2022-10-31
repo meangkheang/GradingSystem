@@ -8,7 +8,7 @@
     <title>Grading and Evaluation System</title>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.4/dist/flowbite.min.css" />
     @vite('resources/css/app.css')
-    @livewireStyles
+    @livewireStyles()
 </head>
 
 <body>
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    @livewireScripts
+    @livewireScripts()
 </body>
 
 

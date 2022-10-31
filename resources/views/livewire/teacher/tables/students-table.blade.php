@@ -105,6 +105,7 @@
                             <span class="font-medium ">{{ $student->email }}</span>
                         </div>
                     </td>
+                    
                 </tr>
             @endforeach
         </tbody>
