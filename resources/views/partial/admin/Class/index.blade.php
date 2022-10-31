@@ -30,6 +30,7 @@
                 <thead>
                     <tr class="bg-gray-200 overflow-hidden text-gray-600 uppercase text-sm leading-normal">
                         <th class="py-3 px-6 text-left">Class Name</th>
+                        <th class="py-3 px-6 text-left">Subject</th>
                         <th class="py-3 px-6 text-left">Tag</th>
                         <th class="py-3 px-6 text-left">Year</th>
                         <th class="py-3 px-6 text-left">Batch</th>
@@ -42,6 +43,12 @@
                 <tbody>
                     @foreach ($classes as $class)
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-left whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="font-medium">{{ $class->name }}</span>
+                                </div>
+                            </td>
+
                             <td class="py-3 px-6 text-left whitespace-nowrap">
                                 <div class="flex items-center">
                                     <span class="font-medium">{{ $class->subject->name }}</span>
@@ -80,6 +87,8 @@
                                         class="bg-blue-400 px-4 py-1 text-white cursor-pointer font-medium ">View</a>
                                     <a href="#"
                                         class="bg-indigo-800 px-4 py-1 text-white cursor-pointer font-medium ">Edit</a>
+                                    <a href="{{ route('admin.classes.add_student_view') }}"
+                                    class="bg-indigo-800 px-4 py-1 text-white cursor-pointer font-medium ">Add Students</a>
                                 </div>
                             </td>
                         </tr>

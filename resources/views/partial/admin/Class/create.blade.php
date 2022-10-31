@@ -45,10 +45,10 @@
                     </div>
 
                     <div class="w-1/2 mx-auto mb-4">
-                        <label for="" class="float-left font-bold"><em>Year</em></label><br>
-                        <input type="number"
+                        <label for="" class="float-left font-bold"><em>Name</em></label><br>
+                        <input type="text"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-                            value="" name="year">
+                            value="" name="name">
                     </div>
                 </div>
 
@@ -96,7 +96,12 @@
                         </select>
                     </div>
 
-
+                    <div class="w-1/2 mx-auto mb-4">
+                        <label for="" class="float-left font-bold"><em>Year</em></label><br>
+                        <input type="number"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                            value="" name="year">
+                    </div>
                   
                 </div>
 

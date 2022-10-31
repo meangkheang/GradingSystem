@@ -43,7 +43,7 @@
 
                 <div>
                     @if (session()->has('user'))
-                        <h1>{{ session('user.name') }}</h1>                        
+                        <h1 class="px-8 py-2 bg-indigo-600 text-white font-semibold rounded"><em> {{ session('user.name') }}</em></h1>                        
                     @endif
                 </div>
 

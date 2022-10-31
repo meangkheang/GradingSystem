@@ -21,6 +21,8 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
+
+
 Route::get('/',function(){
 
     define('USER_TYPE', session('user.usertype.type.name'));
@@ -35,7 +37,8 @@ Route::get('/',function(){
 
         case 'User' : 
             return redirect()->route('user.test');
-
+        default : 
+            return redirect()->route('login');
     }
 });
 
@@ -70,6 +73,7 @@ Route::group([],function(){
 
         Route::group(['prefix' => 'classes' , 'as' => 'classes.'],function(){
 
+            Route::get('/add_student',[\App\Http\Controllers\Admin\ClassController::class,'add_student_view'])->name('add_student_view');
             Route::get('/',[\App\Http\Controllers\Admin\ClassController::class,'index'])->name('index');
             Route::get('/create',[\App\Http\Controllers\Admin\ClassController::class,'create'])->name('create');
             Route::post('/create',[\App\Http\Controllers\Admin\ClassController::class,'store'])->name('store');
@@ -107,6 +111,13 @@ Route::group([],function(){
         Route::get('/viewscore',[UserController::class,'view_score'])->name('view_score');
         Route::get('/request_student',[UserController::class,'request_student'])->name('request_as_student');
         Route::post('/request_student',[UserController::class,'store_request_student'])->name('store.request_as_student');
+
+        Route::group(['prefix' => 'class','as' => 'class.'],function(){
+
+            Route::get('/',[\App\Http\Controllers\User\ClassController::class,'index'])->name('index');
+            Route::post('/',[\App\Http\Controllers\User\ClassController::class,'store'])->name('store');
+
+        });
 
     });
 });

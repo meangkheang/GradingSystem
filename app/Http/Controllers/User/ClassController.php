@@ -1,14 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
-use App\Models\User;
-use App\Models\SubjectClass;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Shift;
-use App\Models\Subject;
-use PhpParser\Node\Expr\FuncCall;
+use Illuminate\Http\Request;
 
 class ClassController extends Controller
 {
@@ -19,10 +14,7 @@ class ClassController extends Controller
      */
     public function index()
     {
-
-        $classes = SubjectClass::all();
-
-        return view('partial.admin.Class.index',compact('classes'));
+        return view('partial.student.class.JoinClass');
     }
 
     /**
@@ -32,17 +24,7 @@ class ClassController extends Controller
      */
     public function create()
     {
-        $teachers = User::whereHas('usertype',function ($query){
-            $query->where('type_id' , 2);
-            
-        })->get();
-
-        $subjects = Subject::all();
-        $shifts = Shift::all();
-
-
-        return view('partial.admin.Class.create',compact('teachers','subjects','shifts'));
-
+        //
     }
 
     /**
@@ -53,28 +35,13 @@ class ClassController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'bach' => 'required',
-            'year'  => 'required',
-            'subject_id' => 'required',
-            'teacher_id' => 'required',
-            'name' => 'required',
-
-        ]);
         
-
-        SubjectClass::create([
-            'class_tag' => \Illuminate\Support\Str::random(6),
-            'subject_id' => $request->subject_id,
-            'teacher_id' => $request->teacher_id,
-            'bach' => $request->bach,
-            'shift_id' => $request->shift_id,
-            'year' => $request->year, 
-            'name' => $request->name
+        $request->validate([
+            'class_tag' => $request->class_tag,
         ]);
 
-        return redirect()->route('admin.classes.index')->with('message','Sent Request successfully');
 
+        return redirect()->route('user.class.index')->with('message','Joined classe successfully');
     }
 
     /**
@@ -120,10 +87,5 @@ class ClassController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function add_student_view()
-    {
-        return view('partial.admin.Class.AddStudent');
     }
 }

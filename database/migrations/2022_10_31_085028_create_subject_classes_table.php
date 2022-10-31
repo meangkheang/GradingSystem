@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('subject_classes', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('class_tag');
             $table->integer('subject_id');
             $table->integer('teacher_id');

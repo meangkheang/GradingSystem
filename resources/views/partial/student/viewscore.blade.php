@@ -14,20 +14,22 @@
         </div>
     </div>
 
-    <div class="border-t-2 mt-4 p-8">
+   
+
+    <div class="border-t-2 mt-4 p-8 overflow-x-scroll">
 
         <div class="w-1/2">
             <label for="" class="float-left font-bold"><em>Select Subject</em></label><br>
             <select id="shift" name="sex"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 pl-10">
-
+    
                 <option value="1">C#</option>
                 <option value="2">Java</option>
                 <option value="3">System Analyze</option>
             </select>
         </div>
 
-        <table class="min-w-max w-full table-auto mt-4">
+        <table class="min-w-max w-full table-auto mt-4 ">
             <thead>
                 <tr class="bg-gray-200 overflow-hidden text-gray-600 uppercase text-sm leading-normal">
                     <th class="py-3 px-6 text-left">Student</th>

@@ -9,7 +9,7 @@ class SubjectClass extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['class_tag','subject_id','teacher_id','bach','shift_id','year','created_at','updated_at'];
+    protected $fillable = ['class_tag','subject_id','teacher_id','bach','shift_id','year','created_at','updated_at','name'];
 
     public function subject(){
         return $this->hasOne(Subject::class,'id','subject_id');

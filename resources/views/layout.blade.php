@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Grading and Evaluation System</title>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.4/dist/flowbite.min.css" />
+    <script src="//unpkg.com/alpinejs" defer></script>
     @vite('resources/css/app.css')
     @livewireStyles()
 </head>
