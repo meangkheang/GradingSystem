@@ -1,17 +1,17 @@
 ## Here some credential
 ```
 
-** Admin **
+- Admin 
 admin@admin.com
 secret
 
-**Teacher**
+- Teacher
 teacher@teacher.com
 secret
 
-**User
+- User
 user@user.com
-
+secret
 
 ```
 
