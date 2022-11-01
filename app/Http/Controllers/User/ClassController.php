@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class ClassController extends Controller
 {
+	public function __construct()
+	{
+	}
     /**
      * Display a listing of the resource.
      *
@@ -43,12 +46,14 @@ class ClassController extends Controller
 
         $class = SubjectClass::where('class_tag', $request->class_tag)->first();
 
+
         //if class not found
         if(!$class) return redirect()->route('user.class.index')->with('error','Class not found');
 
-        // StudentClass::create([
-        //     'student_id' => 
-        // ]);
+        StudentClass::create([
+            'student_id' => session('user.student.id'),
+            'class_tag' => $request->class_tag
+        ]);
 
         return redirect()->route('user.test')->with('message','Joined classe successfully');
     }

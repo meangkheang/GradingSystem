@@ -1,18 +1,19 @@
 <div>
-    <div class="flex justify-between items-center px-8 " >
+    <div class="flex justify-between items-center px-8 ">
         <div>
-                <h1 class="font-bold text-lg">
-                    Subject : 1
+            <h1 class="font-bold text-lg">
+                Subject : {{ count($classes) }}
 
-                </h1>
+            </h1>
         </div>
 
         @if (session('user.student') != null)
-        <div>
-            <button class="px-4 py-2 rounded bg-indigo-600 text-white" wire:click="RedirectToJoinClassRoute" >Join Class</button>
-        </div>
+            <div>
+                <button class="px-4 py-2 rounded bg-indigo-600 text-white" wire:click="RedirectToJoinClassRoute">Join
+                    Class</button>
+            </div>
         @endif
-      
+
 
     </div>
 
@@ -36,49 +37,55 @@
                     <th class="py-3 px-6 text-left">SHIFT</th>
                     <th class="py-3 px-6 text-left">TEACHER</th>
                     <th class="py-3 px-6 text-left">STUDENTs</th>
-                    <th class="py-3 px-6 text-left">FEMALE</th>
-                   
+
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
-                    <td class="py-3 px-6 text-left whitespace-nowrap">
-                        <div class="flex items-center">
-                            <span class="font-medium">Y3-B3-C#-Morning</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-left whitespace-nowrap">
-                        <div class="flex items-center">
-                            <span class="font-medium">C#</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium ">Evening</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium">Pen Narong</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium ">15</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium ">3</span>
-                        </div>
-                    </td>
-                   
+                
+                
 
-                   
-                    
-                </tr>
+                @forelse ($classes as $class)
+                
+                
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                            <div class="flex items-center">
+                                <span class="font-medium">{{ $class->subject_class->name }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                            <div class="flex items-center">
+                                <span class="font-medium">{{ $class->subject_class->subject->name }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium ">{{ $class->subject_class->shift->name }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium">{{ $class->subject_class->teacher()->name }} </span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium ">{{ $class->subject_class->total_student() }}</span>
+                            </div>
+                        </td>
+                     
+
+                    </tr>
+                @empty
+
+                <td colspan="6">
+                    <div class="text-center px-4 py-2 rounded bg-indigo-500 text-white w-fulls">No class yet</div>
+                </td>
+
+                @endforelse
+
             </tbody>
         </table>
-        
+
     </div>
 </div>

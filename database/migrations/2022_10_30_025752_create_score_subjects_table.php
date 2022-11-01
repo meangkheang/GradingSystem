@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('score_subjects', function (Blueprint $table) {
             $table->id();
             $table->integer('subject_id');
+            $table->string('class_tag');
             $table->integer('score_id');
             $table->integer('shift_id');
             $table->string('grade')->default('null');

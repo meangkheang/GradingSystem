@@ -9,7 +9,7 @@ class ScoreSubject extends Model
 {
     use HasFactory;
 
-    protected $fillable =['subject_id','score_id','grade','shift_id'];
+    protected $fillable =['subject_id','score_id','grade','shift_id','class_tag'];
 
     public function score(){
         return $this->hasOne(Score::class,'id','score_id');

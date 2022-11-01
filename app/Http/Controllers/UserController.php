@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Major;
 use App\Models\RequestStudent;
 use App\Models\Student;
+use App\Models\StudentClass;
 use App\Models\UserType;
 use App\Traits\CheckUser;
 use Illuminate\Http\Request;
@@ -52,6 +53,7 @@ class UserController extends Controller
          $StudentCount = Student::find(session('user.id'))->StudentCount();
 
          session()->put('student_count',$StudentCount);
+
 
         if(session('user.student') == null) return redirect()->route('user.request_as_student');
 
