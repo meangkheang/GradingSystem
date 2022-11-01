@@ -24,4 +24,9 @@ class Student extends Model
     public function campus(){
         return $this->hasOne(Campus::class,'id','campus_id');
     }
+
+    public function StudentCount(){
+
+        return Student::where('user_id',$this->id)->count();
+    }
 }

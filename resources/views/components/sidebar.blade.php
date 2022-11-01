@@ -182,9 +182,10 @@
 
 
 
-
                     {{-- if student loggin --}}
                     @if (session('usertype') == 'User')
+                        
+                        @if(session('user.student') != null)
                         <li>
                             <a href="{{ route('user.index') }}"
                                 class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
@@ -207,9 +208,11 @@
                                 <span class="ml-3 flex-1 whitespace-nowrap">View Score</span>
                             </a>
                         </li>
-                        
+                        @endif
 
-                        @if (!session()->has('already_request_as_student'))
+                        
+                        {{-- mean if user already send request as student and got accepted. user no longer can send new request --}}
+                        @if (!session()->has('already_request_as_student') && session('student_count') == 0)
                             <li>
                                 <a href="{{ route('user.request_as_student') }}"
                                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
