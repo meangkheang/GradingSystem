@@ -111,7 +111,9 @@ Route::group([],function(){
         Route::get('/subjects',[UserController::class,'test'])->name('test');
         Route::get('/viewscore',[UserController::class,'view_score'])->name('view_score');
         Route::get('/request_student',[UserController::class,'request_student'])->name('request_as_student');
+        Route::get('/viewprofile',[UserController::class,'viewprofile'])->name('viewprofile');
         Route::post('/request_student',[UserController::class,'store_request_student'])->name('store.request_as_student');
+
 
         Route::group(['prefix' => 'class','as' => 'class.'],function(){
 

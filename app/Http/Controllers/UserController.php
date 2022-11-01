@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
+    public function viewprofile()
+    {
+        return view('partial.student.ViewProfile');
+    }
+
     public function view_score()
     {
         return view('partial.student.viewscore');
@@ -154,8 +159,9 @@ class UserController extends Controller
 
         session()->put('student_count',$StudentCount);
 
-        $majors = Major::all();
+        if(session()->has('already_request_as_student')) return redirect()->route('user.viewprofile');
 
+        $majors = Major::all();
         return view('partial.student.RequestAsStudent',compact('majors'));
     }
 
@@ -191,7 +197,7 @@ class UserController extends Controller
         ]);
 
 
-        return redirect()->route('user.test')->with('message','Sent Request successfully');
+        return redirect()->route('user.viewprofile')->with('message','Sent Request successfully');
         
     }
 }
