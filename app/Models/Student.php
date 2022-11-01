@@ -29,4 +29,9 @@ class Student extends Model
 
         return Student::where('user_id',$this->id)->count();
     }
+
+    public function major(){
+        return $this->hasOne(Major::class,'id','major_id');
+    }
+
 }

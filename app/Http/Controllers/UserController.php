@@ -196,6 +196,7 @@ class UserController extends Controller
             'campus_id' =>$request -> campus_id 
         ]);
 
+        session()->put('already_request_as_student',true);
 
         return redirect()->route('user.viewprofile')->with('message','Sent Request successfully');
         
