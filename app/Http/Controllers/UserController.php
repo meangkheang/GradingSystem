@@ -43,17 +43,22 @@ class UserController extends Controller
 
         $check = \App\Models\User::find(session('user.id'))->request_student;
         
+      
+
         if($check){
             session()->put('already_request_as_student',true);
         }else{
             session()->remove('already_request_as_student');
+
         }
 
          //set session
-         $StudentCount = Student::find(session('user.id'))->StudentCount();
+
+         $Student = Student::where('user_id',(session('user.id')))->first();
+
+         $StudentCount =  $Student == null ? 0 : $Student->StudentCount();
 
          session()->put('student_count',$StudentCount);
-
 
         if(session('user.student') == null) return redirect()->route('user.request_as_student');
 
@@ -157,7 +162,9 @@ class UserController extends Controller
     public function request_student()
     {
         //set session
-        $StudentCount = Student::find(session('user.id'))->StudentCount();
+        $StudentCount = Student::find(session('user.id'));
+        $StudentCount =  $StudentCount == null ? 0 : $StudentCount->StudentCount();
+
 
         session()->put('student_count',$StudentCount);
 

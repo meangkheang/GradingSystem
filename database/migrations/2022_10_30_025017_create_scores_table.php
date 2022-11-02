@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->integer('student_id');
             $table->string('score_tag');
+            $table->string('class_tag');
             $table->double('class_participation');
             $table->double('hw');
             $table->double('midterm');

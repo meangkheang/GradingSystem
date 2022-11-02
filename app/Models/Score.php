@@ -10,7 +10,7 @@ class Score extends Model
     use HasFactory;
 
     protected $fillable = [
-        'student_id','score_tag','class_participation','hw','midterm','slidehandbook','major_assignment','presentation','final','total','is_grade'
+        'student_id','score_tag','class_participation','hw','midterm','slidehandbook','major_assignment','presentation','final','total','is_grade','class_tag'
     ];
 
     public static function search($search){
@@ -35,7 +35,7 @@ class Score extends Model
         $grade = '';
 
         if($total <50 ){
-            $total = 'F';
+            $grade = 'F';
         }
         if($total>=0&&$total<=50)
             $grade="E";

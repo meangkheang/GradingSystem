@@ -27,11 +27,19 @@ class Student extends Model
 
     public function StudentCount(){
 
-        return Student::where('user_id',$this->id)->count();
+        return Student::where('user_id',$this->user_id)->count();
     }
 
     public function major(){
         return $this->hasOne(Major::class,'id','major_id');
     }
 
+    public function student_class(){
+        return $this->hasOne(StudentClass::class,'student_id','id');
+    }
+
+    public function score()
+    {
+        return $this->hasOne(Score::class,'student_id','id');
+    }
 }

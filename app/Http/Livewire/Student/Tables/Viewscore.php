@@ -17,17 +17,8 @@ class Viewscore extends Component
 
     public function updated($key,$value){
 
-        //get subject with class_tag
-        $class = StudentClass::where('class_tag', $value)->first();
-        $subject_id = $class->subject_id;
-
-      
-
-        //get score via student id
-        $student = session('user.student');
-
         //get score need user_id
-        $this->score = Score::where('student_id',session('user.student.id'))->first();
+        $this->score = Score::where('student_id',session('user.student.id'))->where('class_tag',$value)->first();
     }
 
   
@@ -36,10 +27,19 @@ class Viewscore extends Component
 
     ];
 
-
+    
     public function mount()
     {
+        
         $this->subjects = StudentClass::where('student_id',session('user.student.id'))->get();
+
+        
+
+        if(count($this->subjects) >0)
+        {
+            $this->score = Score::where('class_tag',$this->subjects->first()->class_tag)->where('student_id',session('user.student.id'))->first();
+        }
+
     }
     public function render()
     {

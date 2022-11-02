@@ -4,8 +4,12 @@ namespace App\Http\Livewire\Teacher\Tables;
 
 use App\Models\Score;
 use App\Models\ScoreSubject;
+use App\Models\Student;
+use App\Models\SubjectClass;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use PHPUnit\Framework\MockObject\Builder\Stub;
 use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class StudentsGrading extends Component
@@ -65,6 +69,7 @@ class StudentsGrading extends Component
 
     public function updated($key,$value){
 
+        
 
         $parts = explode(".",$key);
 
@@ -89,7 +94,9 @@ class StudentsGrading extends Component
 
             $this->validate();
 
+
             $score = Score::where('score_tag',$this->scores[$parts[1]]['score_tag'])->first();
+
             $score_subject = ScoreSubject::where('score_id', $score->id)->first();
             
 
@@ -110,15 +117,15 @@ class StudentsGrading extends Component
             
         }
         
-        
+        //call methods
+        $this->RefreshStudent($value);
     }
 
-    public function save(){
+    public function RefreshStudent($value){
 
-        // session()->flash('message', 'Post successfully updated.');
-
-        // $this->render();
-        // return redirect()->route('teacher.grading');
+        if($value != 0){
+            $this->students =  $this->SearchStudentWithClassTag($value);
+        }
     }
 
     public function clearSession(){
@@ -127,9 +134,15 @@ class StudentsGrading extends Component
 
     }
 
+  
+
     
 
     public $scores = [''];
+    public $students = [''];
+    public $classes = [];
+
+   
 
 
     protected $rules =[
@@ -144,15 +157,94 @@ class StudentsGrading extends Component
     ];
 
     public function mount(){
+    
+        //user session id for teacher because user type alrady check beforehand
+        $this->classes = SubjectClass::where('teacher_id',session('user.id'))->get();
+
+
+
+        $classtag = $this->classes[0]->class_tag;
+        $this->students = $this->SearchStudentWithClassTag($classtag);
+
+        //InitializeScore For Student
+        $this->InitializeScoreForStudent($this->students,$classtag);
 
         $this->scores = Score::all();
-
         //  //binding probs
         //  foreach($this->pre_scores as $index => $score ){
         //     $this->fill(["items.{$index}" => $score]);
         // }
-
         
+    }
+    public function SearchStudentWithClassTag($classtag){
+
+       $students = $this->students = Student::whereHas('student_class',function($query) use($classtag)
+        {
+            $query->where('class_tag',$classtag);
+        })->get();
+
+        return $students;
+    }
+
+    public function InitializeScoreForStudent($students,$classtag){
+
+        foreach($students as $student)
+        {
+           
+            if($student->score == null)
+            {
+                Score::create([
+                    'student_id' => $student->id,
+                    'class_tag' => $classtag,
+                    'score_tag' => \Illuminate\Support\Str::random(6),
+                    'class_participation' => 0,
+                    'hw' => 0,
+                    'midterm' => 0,
+                    'slidehandbook' => 0,
+                    'major_assignment' => 0,
+                    'presentation' => 0,
+                    'final' => 0,
+                    'total' => 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+
+
+                ScoreSubject::create([
+                    'subject_id' => 1,
+                    'class_tag' => $classtag,
+                    'score_id'=> Score::where('class_tag',$classtag)->where('student_id',$student->id)->first()->id,
+                    'shift_id' => 1,
+                    'grade' => $this->CalculateGrade( Score::where('class_tag',$classtag)->first()->total),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+            }
+            
+
+          
+        }
+
+    }
+    public function CalculateGrade($total):string{
+
+        $grade = '';
+
+        if($total <50 ){
+            $grade = 'F';
+        }
+        if($total>=0 &&$total<=50)
+            $grade="E";
+        if($total>50 &&$total<=70)
+            $grade="D";
+        if($total>70 &&$total<=80)
+            $grade="C";
+        if($total>80 &&$total<=90)
+            $grade="B";
+        if($total>90 && $total <= 100)
+            $grade="A";
+
+        return $grade;
     }
   
 

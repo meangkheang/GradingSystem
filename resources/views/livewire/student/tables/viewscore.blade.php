@@ -98,7 +98,7 @@
                         </td>
                         <td class="py-3 px-6 text-center">
                             <div class="flex items-center justify-center">
-                                <span class="font-medium text-green-500">{{ $score->CalculateGrade() }}</span>
+                                <span class="font-medium text-green-500">{{ $score->score_subject }}</span>
                             </div>
                         </td>
                         <td class="py-3 px-6 text-center">
@@ -107,6 +107,11 @@
                             </div>
                         </td>
                     </tr>
+                
+                @else
+
+                <td colspan="14" class="text-lg text-center px-4 py-2  text-black">This subject not score yet !!</td>
+
                 @endif
 
             </tbody>

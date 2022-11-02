@@ -21,7 +21,9 @@ class User extends Authenticatable
 
     }
 
-
+    // public function teacher(){
+    //     return $this->hasOne(UserType::class,'','');
+    // }
 
     /**
      * The attributes that are mass assignable.
