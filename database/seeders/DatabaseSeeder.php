@@ -118,9 +118,9 @@ class DatabaseSeeder extends Seeder
                 'class_tag' => $class_tag,
                 'subject_id' => random_int(1,3),
                 'teacher_id' => random_int(1,3),
-                'bach' => 3,
-                'shift_id' => 1,
-                'year' => 3
+                'bach' => random_int(1,3),
+                'shift_id' => random_int(1,3),
+                'year' => random_int(1,3)
             ]);
 
             //store score with subject in scoresubject table

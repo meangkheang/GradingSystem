@@ -51,9 +51,9 @@ class Score extends Model
         return $grade;
     }
 
-    public static function SubjectName(){
-        
-
+    public function class(){
+        return $this->hasOne(SubjectClass::class,'class_tag','class_tag');
     }
+  
     
 }

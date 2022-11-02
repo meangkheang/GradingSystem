@@ -14,4 +14,8 @@ class ScoreSubject extends Model
     public function score(){
         return $this->hasOne(Score::class,'id','score_id');
     }
+
+    public function class(){
+        return $this->hasOne(SubjectClass::class,'class_tag','class_tag');
+    }
 }
