@@ -87,6 +87,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         foreach(range(0,20) as $index =>  $row){
+            $class_tag = Str::random(6);
+
+
             $class_participation = random_int(5,10);
             $hw = random_int(2,4);
             $midterm = random_int(3,5);
@@ -96,6 +99,7 @@ class DatabaseSeeder extends Seeder
             $presentation = random_int(5,12);
             $final = random_int(12,20);
             $score_tag = Str::random(6);
+            $class_tag = $class_tag;
             $total = $class_participation + $hw + $midterm + $slidehandbook + $major_assignment + $presentation + $final;
     
             \App\Models\Score::create([
@@ -111,7 +115,6 @@ class DatabaseSeeder extends Seeder
                 'total' => $total
             ]);
 
-            $class_tag = Str::random(6);
             //create class
             \App\Models\SubjectClass::create([
                 'name' => fake()->company(),
