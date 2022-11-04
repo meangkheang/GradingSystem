@@ -37,7 +37,7 @@ class Score extends Model
         if($total <50 ){
             $grade = 'F';
         }
-        if($total>=0&&$total<=50)
+        if($total >= 50)
             $grade="E";
         if($total>50&&$total<=70)
             $grade="D";

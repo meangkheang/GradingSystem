@@ -101,7 +101,7 @@ Route::group([],function(){
         Route::get('/students',[TeacherController::class,'students'])->name('students');
         Route::get('/grading',[TeacherController::class,'grading'])->name('grading');
         Route::get('/score',[TeacherController::class,'score'])->name('score');
-
+        Route::get('/student/print',[TeacherController::class,'printing'])->name('printing');
     });
 
     

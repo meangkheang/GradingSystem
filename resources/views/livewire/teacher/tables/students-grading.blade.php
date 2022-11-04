@@ -79,7 +79,8 @@
             <tbody class="text-gray-600 text-sm font-light">
                
                     @foreach ($scores as $index => $score)
-                        
+                    @if($score != '')
+                    
                     <tr class="border-b border-gray-200 hover:bg-gray-100" :wire:key="score_{{ $index }}">
                         <td class="py-3 px-6 text-left whitespace-nowrap">
                             <div class="flex items-center">
@@ -142,7 +143,7 @@
                         </td>
                        
                     </tr>
-                    
+                    @endif  
                     @endforeach
 
             </tbody>

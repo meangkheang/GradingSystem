@@ -118,17 +118,17 @@ class DatabaseSeeder extends Seeder
             //     'total' => $total
             // ]);
 
-            $class_tag = Str::random(6);
-            //create class
-            \App\Models\SubjectClass::create([
-                'name' => fake()->company(),
-                'class_tag' => $class_tag,
-                'subject_id' => random_int(1,3),
-                'teacher_id' => random_int(1,3),
-                'bach' => 3,
-                'shift_id' => 1,
-                'year' => 3
-            ]);
+            // $class_tag = Str::random(6);
+            // //create class
+            // \App\Models\SubjectClass::create([
+            //     'name' => fake()->company(),
+            //     'class_tag' => $class_tag,
+            //     'subject_id' => random_int(1,3),
+            //     'teacher_id' => random_int(1,3),
+            //     'bach' => 3,
+            //     'shift_id' => 1,
+            //     'year' => 3
+            // ]);
 
             // //store score with subject in scoresubject table
             // \App\Models\ScoreSubject::create([

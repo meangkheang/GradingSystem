@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StudentClass;
+use App\Models\Subject;
+use App\Models\SubjectClass;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
     
+    public function printing(){
+        
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('invoice\students_score');
+        // return $pdf->download('invoice.pdf');
 
+    }
     public function AuthorizeUser()
     {
         $usertype = session('user.usertype.type.name'); 
@@ -32,8 +40,15 @@ class TeacherController extends Controller
             if(session('usertype') == "Admin") return redirect()->route('Admin.index');
 
         }
+        $all_student= 0;
+        $classes= SubjectClass::where('teacher_id',session('user.id'))->get();
+        
+        foreach($classes as $class){
+            $all_student += StudentClass::where('class_tag',$class->class_tag)->count();
+        }
 
-        return view('partial.teacher.dashboard');
+        $student_count = 0;
+        return view('partial.teacher.dashboard',compact('classes','all_student'));
         
     }
 
@@ -48,7 +63,6 @@ class TeacherController extends Controller
     public function grading(){
 
         $this->AuthorizeUser();
-
         return view('partial.teacher.grading');
         
     }

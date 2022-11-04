@@ -69,7 +69,9 @@ class StudentsGrading extends Component
 
     public function updated($key,$value){
 
-        dd(gettype($value));
+        if($value == ''){
+            return;
+        }
 
         $parts = explode(".",$key);
 
@@ -157,6 +159,7 @@ class StudentsGrading extends Component
     ];
 
     public function mount(){
+
     
         //user session id for teacher because user type alrady check beforehand
         $this->classes = SubjectClass::where('teacher_id',session('user.id'))->get();
@@ -170,6 +173,7 @@ class StudentsGrading extends Component
         $this->InitializeScoreForStudent($this->students,$classtag);
 
         $this->scores = Score::all();
+    
         //  //binding probs
         //  foreach($this->pre_scores as $index => $score ){
         //     $this->fill(["items.{$index}" => $score]);
@@ -190,7 +194,6 @@ class StudentsGrading extends Component
 
         foreach($students as $student)
         {
-           
             if($student->score == null)
             {
                 Score::create([
