@@ -69,7 +69,7 @@ class StudentsGrading extends Component
 
     public function updated($key,$value){
 
-        
+        dd(gettype($value));
 
         $parts = explode(".",$key);
 
