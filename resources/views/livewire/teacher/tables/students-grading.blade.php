@@ -5,6 +5,15 @@
         <div class="mt-2 relative flex lg:w-full gap-2 justify-between ">
 
             <div class="w-1/2 flex gap-4">
+
+                <select id="campus" 
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
+                @forelse ($classes as $class)
+                    <option value="{{ $class->class_tag }}">{{ $class->name }}</option>
+                @empty
+                @endforelse
+                </select>
+
                 <select id="campus" wire:model="campus"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                     <option selected value="1">UC1</option>
@@ -22,7 +31,6 @@
             </div>
 
 
-            <h1 class=" text-lg">Course : Name</h1>
 
         </div>
         <div class="mt-2 relative lg:w-64">

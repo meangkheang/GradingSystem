@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\User;
 use App\Models\Score;
 use App\Models\Subject;
 use Illuminate\Support\Str;
@@ -54,20 +55,21 @@ class DatabaseSeeder extends Seeder
             'name' => 'Software engineering'
         ]);
 
-        foreach(range(0,20) as $row){
-            \App\Models\Student::create([
-                'student_id' => Str::random(5),
-                'phone' => fake()->phoneNumber(),
-                'name' =>fake()->name(),
-                'email' =>fake()->email(),
-                'major_id' => 1,
-                'sex' => random_int(1,2),
-                'campus_id' => 1,
-                'shift_id' => random_int(1,3),
-                'dob' => fake()->date(),
-                'pob' => fake()->address(),
-            ]);
-        }
+        // foreach(range(0,20) as $row){
+
+        //     \App\Models\Student::create([
+        //         'student_id' => Str::random(5),
+        //         'phone' => fake()->phoneNumber(),
+        //         'name' =>fake()->name(),
+        //         'email' =>fake()->email(),
+        //         'major_id' => 1,
+        //         'sex' => random_int(1,2),
+        //         'campus_id' => 1,
+        //         'shift_id' => random_int(1,3),
+        //         'dob' => fake()->date(),
+        //         'pob' => fake()->address(),
+        //     ]);
+        // }
         
 
         //create subject
@@ -86,35 +88,37 @@ class DatabaseSeeder extends Seeder
             'name' => 'System Analyze',
         ]);
 
-        foreach(range(0,20) as $index =>  $row){
-            $class_tag = Str::random(6);
+        // foreach(range(0,20) as $index =>  $row){
+
+            // $class_tag = Str::random(6);
 
 
-            $class_participation = random_int(5,10);
-            $hw = random_int(2,4);
-            $midterm = random_int(3,5);
-            $slidehandbook = random_int(8,12);
-            $student_id = random_int(1,11);
-            $major_assignment = random_int(5,20);
-            $presentation = random_int(5,12);
-            $final = random_int(12,20);
-            $score_tag = Str::random(6);
-            $class_tag = $class_tag;
-            $total = $class_participation + $hw + $midterm + $slidehandbook + $major_assignment + $presentation + $final;
+            // $class_participation = random_int(5,10);
+            // $hw = random_int(2,4);
+            // $midterm = random_int(3,5);
+            // $slidehandbook = random_int(8,12);
+            // $student_id = random_int(1,11);
+            // $major_assignment = random_int(5,20);
+            // $presentation = random_int(5,12);
+            // $final = random_int(12,20);
+            // $score_tag = Str::random(6);
+            // $total = $class_participation + $hw + $midterm + $slidehandbook + $major_assignment + $presentation + $final;
     
-            \App\Models\Score::create([
-                'class_participation' =>  $class_participation,
-                'hw' => $hw,
-                'midterm' => $midterm,
-                'slidehandbook' => $slidehandbook,
-                'student_id' => $student_id,
-                'score_tag' => $score_tag,
-                'major_assignment' => $major_assignment,
-                'presentation' => $presentation,
-                'final' =>$final,
-                'total' => $total
-            ]);
+            // \App\Models\Score::create([
+            //     'class_participation' =>  $class_participation,
+            //     'hw' => $hw,
+            //     'midterm' => $midterm,
+            //     'slidehandbook' => $slidehandbook,
+            //     'student_id' => $student_id,
+            //     'score_tag' => $score_tag,
+            //     'class_tag' => $class_tag,
+            //     'major_assignment' => $major_assignment,
+            //     'presentation' => $presentation,
+            //     'final' =>$final,
+            //     'total' => $total
+            // ]);
 
+            $class_tag = Str::random(6);
             //create class
             \App\Models\SubjectClass::create([
                 'name' => fake()->company(),
@@ -126,19 +130,19 @@ class DatabaseSeeder extends Seeder
                 'year' => 3
             ]);
 
-            //store score with subject in scoresubject table
-            \App\Models\ScoreSubject::create([
-                'subject_id' => random_int(1,3),
-                'score_id' => $index+1,
-                'shift_id' => random_int(1,3),
-                'class_tag' => $class_tag,
-                'grade' => Score::find($index+1)->CalculateGrade()
-            ]);
-        }
+            // //store score with subject in scoresubject table
+            // \App\Models\ScoreSubject::create([
+            //     'subject_id' => random_int(1,3),
+            //     'score_id' => $index+1,
+            //     'shift_id' => random_int(1,3),
+            //     'class_tag' => $class_tag,
+            //     'grade' => Score::find($index+1)->CalculateGrade()
+            // ]);
+        // }
         
         //create users
 
-        \App\Models\User::create([
+        User::create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('secret'), 
