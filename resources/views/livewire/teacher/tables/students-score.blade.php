@@ -5,7 +5,13 @@
         <div class="mt-2 relative flex lg:w-full gap-2 justify-between ">
 
             <div class="w-1/2 flex gap-4">
-                <select id="campus" wire:model.debounce.200ms ="campus"
+                <select id="campus" wire:model='select_class'
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
+                    @foreach ($classes as $class)
+                        <option value="{{ $class->class_tag }}">{{ $class->name }}</option>
+                    @endforeach
+                </select>
+                <select id="campus" wire:model.debounce.200ms="campus"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                     <option selected value="1">UC1</option>
                     <option value="2">UC2</option>
@@ -17,21 +23,21 @@
                     <option value="3">Evening</option>
                 </select>
 
-                <select id="shift" wire:model.debounce.200ms ="grade"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
-                <option selected value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="E">E</option>
-                <option value="F">F</option>
+                <select id="shift" wire:model.debounce.200ms="grade"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
+                    <option selected value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
 
-            </select>
+                </select>
 
             </div>
 
 
-            <a  href="{{ route('teacher.printing') }}" class="px-4 py-2 rounded bg-indigo-500 text-white">Print</a>
+            <a href="{{ route('teacher.printing') }}" class="px-4 py-2 rounded bg-indigo-500 text-white">Print</a>
 
         </div>
         <div class="mt-2 relative lg:w-64">
@@ -43,7 +49,7 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </div>
-            <input type="text" name="email" id="topbar-search" wire:model.debounce.500ms ="search"
+            <input type="text" name="email" id="topbar-search" wire:model.debounce.500ms="search"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
                 placeholder="Search Student">
         </div>
@@ -72,76 +78,77 @@
             <tbody class="text-gray-600 text-sm font-light">
 
                 @foreach ($students as $student)
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
-                    <td class="py-3 px-6 text-left whitespace-nowrap">
-                        <div class="flex items-center">
-                            <span class="font-medium">{{ $student->student->name }}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium ">{{ $student->student->sex == 1 ? 'M' : 'F' }}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium">{{ $student->class_participation }}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium ">{{ $student->hw }}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium ">{{ $student->midterm }}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium ">{{ $student->slidehandbook }}</span>
-                        </div>
-                    </td>
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                            <div class="flex items-center">
+                                <span class="font-medium">{{ $student->student->name }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium ">{{ $student->student->sex == 1 ? 'M' : 'F' }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium">{{ $student->class_participation }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium ">{{ $student->hw }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium ">{{ $student->midterm }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium ">{{ $student->slidehandbook }}</span>
+                            </div>
+                        </td>
 
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium ">{{ $student->major_assignment }}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium ">{{ $student->presentation }}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium ">{{ $student->final }}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center">
-                            <span class="font-medium ">{{ $student->total }}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center justify-center">
-                            <span class="font-medium text-green-500">{{ $student->score_subject->grade }}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-center">
-                        <div class="flex items-center justify-center">
-                            <a href="#" class="font-medium hover:underline">{{ $student->student->shift->name }}</a>
-                        </div>
-                    </td>
-                </tr>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium ">{{ $student->major_assignment }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium ">{{ $student->presentation }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium ">{{ $student->final }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center">
+                                <span class="font-medium ">{{ $student->total }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center justify-center">
+                                <span class="font-medium text-green-500">{{ $student->score_subject->grade }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex items-center justify-center">
+                                <a href="#"
+                                    class="font-medium hover:underline">{{ $student->student->shift->name }}</a>
+                            </div>
+                        </td>
+                    </tr>
                 @endforeach
 
             </tbody>
         </table>
 
 
-        
+
 
     </div>
 

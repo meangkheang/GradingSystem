@@ -9,7 +9,8 @@ use Livewire\Component;
 class StudentsScore extends Component
 {
     public $students = []; 
-    
+    public $classes = [];
+    public $select_class = '' ;
     public $shift = '1';
     public $grade = 'A';
     public $search = '';
@@ -18,64 +19,82 @@ class StudentsScore extends Component
 
     public $users= [];
 
+    public function updated($key, $value)
+    {
+        if($key == 'select_class')
+        {
+            $this->select_class =  $value;
+            $this->filterScoresByClass($this->select_class);
+        }
+    }   
+    function filterScoresByClass($class_tag): void {
+
+        $this->students = Score::whereHas('student',function($query){
+            $query->where('campus_id',$this->campus);
+        })
+        ->where('class_tag',$class_tag)
+        ->get();
+    }
 
     public function updatedCampus($value)
     {
         $this->students = Score::whereHas('student',function($query){
-
-            $query->where('campus_id',$this->campus)
-                  ->where('shift_id', $this->shift);
-
+            $query->where('campus_id',$this->campus);
         })
-        ->whereHas('class',function($query){
-            $query->where('class_tag',$this->class_tag());
-        })
+        ->where('class_tag',$this->select_class)
         ->get();
     }
 
     public function updatedSearch($value)
     {
         $this->students = Score::whereHas('student',function($query){
-
             $query->where('name','like', '%' . $this->search .'%');
-
         })
-        ->whereHas('class',function($query){
-            $query->where('class_tag',$this->class_tag());
-        })
+        ->where('class_tag',$this->select_class)
         ->get();
     }
 
     public function updatedGrade(){
         $this->students = Score::whereHas('score_subject',function($query){
-
             $query->where('grade','like', '%' . $this->grade .'%');
-
         })
-        ->whereHas('class',function($query){
-            $query->where('class_tag',$this->class_tag());
+        ->whereHas('student',function($query){
+            $query->where('campus_id',$this->campus);
+            $query->where('shift_id',$this->shift);
         })
+        ->where('class_tag',$this->select_class)
         ->get();
     }
 
     public function updatedShift(){
         $this->students = Score::whereHas('class',function($query){
-
             $query->where('shift_id',$this->shift);
-
-        })->get();
+        })
+        // ->whereHas('student',function($query){
+        //     $query->where('campus_id',$this->campus);
+        // })   
+        ->where('class_tag',$this->select_class)
+        ->get();
     }
 
 
     public function class_tag(){
-        return $class = SubjectClass::where('teacher_id',session('user.id'))->first()->class_tag;
+        return SubjectClass::where('teacher_id',session('user.id'))->first()->class_tag;
     }
     public function mount(){
+
+        $this->loadClass();
+
 
         //chain with table student
         $class = SubjectClass::where('teacher_id',session('user.id'))->first();
         $this->shift = $class->shift_id; 
         $this->students = Score::where('class_tag',$this->class_tag())->get();
+    }
+    public function loadClass(){
+        $this->classes = SubjectClass::where('teacher_id',session('user.id'))->get();
+        
+        $this->select_class = $this->class_tag();
     }
 
     public function render()

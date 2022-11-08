@@ -27,7 +27,7 @@ class StudentsGrading extends Component
     public $total;
 
 
-
+    public $select_class;
     public $campus = 1;
     public $shift = 1;
     public $grade = 0;
@@ -50,18 +50,22 @@ class StudentsGrading extends Component
 
         $this->scores = Score::whereHas('student',function($query) use($value) {
             $query->where('shift_id', $value);
-                 
-        })->get(); 
+            $query->where('campus_id', $this->campus);
+        })
+        ->where('class_tag',$this->select_class)
+        ->get(); 
         
-
     }
     
 
     public function updatedCampus(){
+
         $this->scores = Score::whereHas('student',function($query) {
             $query->where('campus_id', $this->campus);
-                 
-        })->get(); 
+            $query->where('shift_id', $this->shift);
+        })
+        ->where('class_tag',$this->select_class)
+        ->get(); 
     }
 
     //life cycle
@@ -71,6 +75,11 @@ class StudentsGrading extends Component
 
         if($value == ''){
             return;
+        }
+        if($key == 'select_class')
+        {
+            $this->select_class = $value;
+            $this->scores = Score::where('class_tag',$value)->get();
         }
 
         $parts = explode(".",$key);
@@ -114,13 +123,12 @@ class StudentsGrading extends Component
                 ]);
             }
             
-          
-            
             
         }
         
-        //call methods
-        $this->RefreshStudent($value);
+        // //call methods
+        // $this->RefreshStudent($value);
+        
     }
 
     public function RefreshStudent($value){
@@ -166,13 +174,13 @@ class StudentsGrading extends Component
 
 
 
-        $classtag = $this->classes[0]->class_tag;
-        $this->students = $this->SearchStudentWithClassTag($classtag);
+        $this->select_class = $this->classes[0]->class_tag;
+        $this->students = $this->SearchStudentWithClassTag($this->select_class);
 
         //InitializeScore For Student
-        $this->InitializeScoreForStudent($this->students,$classtag);
+        $this->InitializeScoreForStudent($this->students,$this->select_class);
 
-        $this->scores = Score::all();
+        $this->scores = Score::where('class_tag', $this->select_class)->get();
     
         //  //binding probs
         //  foreach($this->pre_scores as $index => $score ){
@@ -258,9 +266,7 @@ class StudentsGrading extends Component
     }
 
     public $isCheck = false;
-
-
-   
+    
 
     
 }
