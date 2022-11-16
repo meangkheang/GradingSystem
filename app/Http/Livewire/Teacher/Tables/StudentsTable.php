@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Teacher\Tables;
 
+use App\Models\RequestStudent;
 use App\Models\Student;
 use Livewire\Component;
 use App\Models\StudentClass;
@@ -35,9 +36,12 @@ class StudentsTable extends Component
         if($key == 'select_class')
         {
             $this->select_class = $value;
-            $this->getStudentsByClass($value);
+            // $this->getStudentsByClass($value);
+            $this->students = Student::whereHas('student_class',function($query){
+                $query->where('class_tag',$this->select_class);
+            })->get();
 
-
+            
         }
         if($key == 'shift_id'){
             $this->students = Student::whereHas('student_class',function($query){
@@ -72,12 +76,13 @@ class StudentsTable extends Component
     public function mount()
     {
         $this->classes = \App\Models\SubjectClass::where('teacher_id',session('user.id'))->get();
+        if(count($this->classes) <=0) return ;
+        
         $this->select_class = $this->classes->first()->class_tag;
 
-        $this->students = Student::search($this->search)
-        ->where('shift_id',$this->shift_id)
-        ->where('campus_id',$this->campus_id)
-        ->get();
+        $this->students = Student::whereHas('student_class',function($query){
+            $query->where('class_tag',$this->select_class);
+        })->get();
     }
 
     public function render()

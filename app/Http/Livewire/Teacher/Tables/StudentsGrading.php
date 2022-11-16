@@ -128,7 +128,11 @@ class StudentsGrading extends Component
         
         // //call methods
         // $this->RefreshStudent($value);
-        
+        if($key == 'select_class'){
+            $this->students =  $this->SearchStudentWithClassTag($value);
+            $this->InitializeScoreForStudent($this->students,$this->select_class);
+            $this->scores = Score::where('class_tag', $this->select_class)->get();
+        }
     }
 
     public function RefreshStudent($value){
@@ -173,9 +177,10 @@ class StudentsGrading extends Component
         $this->classes = SubjectClass::where('teacher_id',session('user.id'))->get();
 
 
-
+        if(count($this->classes) <= 0) return;
         $this->select_class = $this->classes[0]->class_tag;
         $this->students = $this->SearchStudentWithClassTag($this->select_class);
+
 
         //InitializeScore For Student
         $this->InitializeScoreForStudent($this->students,$this->select_class);
@@ -190,7 +195,7 @@ class StudentsGrading extends Component
     }
     public function SearchStudentWithClassTag($classtag){
 
-       $students = $this->students = Student::whereHas('student_class',function($query) use($classtag)
+       $students = Student::whereHas('student_class',function($query) use($classtag)
         {
             $query->where('class_tag',$classtag);
         })->get();
@@ -199,10 +204,14 @@ class StudentsGrading extends Component
     }
 
     public function InitializeScoreForStudent($students,$classtag){
-
+        
         foreach($students as $student)
         {
-            if($student->score == null)
+            $hasScore = $student::whereHas('score',function($query) use($classtag){
+                $query->where('class_tag',$classtag);
+            })->find($student->id);
+
+            if($hasScore == null)
             {
                 Score::create([
                     'student_id' => $student->id,

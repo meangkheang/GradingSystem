@@ -2,19 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StudentClass;
 use App\Models\Subject;
+use App\Models\StudentClass;
 use App\Models\SubjectClass;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TeacherController extends Controller
 {
+    public function print_option($class_id)
+    {
+        return view('invoice.option',compact('class_id'));
+    }
     
-    public function printing(){
+    public function printing($class_id){
         
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('invoice\students_score');
-        // return $pdf->download('invoice.pdf');
+        $students = StudentClass::where('class_tag',$class_id)->get();
 
+        $pdf = Pdf::loadView('invoice\students_score');
+
+        session()->put('students',$students);
+
+        return $pdf->download('invoice.pdf');
     }
     public function AuthorizeUser()
     {

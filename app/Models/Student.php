@@ -37,9 +37,24 @@ class Student extends Model
     public function student_class(){
         return $this->hasOne(StudentClass::class,'student_id','id');
     }
+    
+    public function subject_class(){
+        return $this->hasOne(SubjectClass::class,'student_id','id');
+    }
+
+    public function getShiftWithClassTag($classtag){
+
+        return SubjectClass::where('class_tag',$classtag)->first()->shift->name;  
+    }
 
     public function score()
     {
         return $this->hasOne(Score::class,'student_id','id');
+    }
+    public function scoreWithClassTag($class_tag){
+        
+        return $this::whereHas('score',function($query) use($class_tag){
+            $query->where('class_tag',$class_tag);
+        })->first();
     }
 }

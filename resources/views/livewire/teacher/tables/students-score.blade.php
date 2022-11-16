@@ -37,7 +37,7 @@
             </div>
 
 
-            <a href="{{ route('teacher.printing') }}" class="px-4 py-2 rounded bg-indigo-500 text-white">Print</a>
+            <a href="{{ route('teacher.printing_option',$select_class) }}" class="px-4 py-2 rounded bg-indigo-500 text-white">Print</a>
 
         </div>
         <div class="mt-2 relative lg:w-64">

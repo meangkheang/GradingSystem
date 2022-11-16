@@ -86,7 +86,7 @@
                         </td>
                         <td class="py-3 px-6 text-center">
                             <div class="flex items-center">
-                                <span class="font-medium ">{{ $student->shift->name }}</span>
+                                <span class="font-medium ">{{ $student->getShiftWithClassTag($select_class) }}</span>
                             </div>
                         </td>
                         <td class="py-3 px-6 text-center">

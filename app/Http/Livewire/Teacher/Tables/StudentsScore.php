@@ -79,9 +79,17 @@ class StudentsScore extends Component
 
 
     public function class_tag(){
-        return SubjectClass::where('teacher_id',session('user.id'))->first()->class_tag;
+
+        $result = SubjectClass::where('teacher_id',session('user.id'))->first();
+        
+        if($result != null){
+            return $result->class_tag;
+        }
+        return 0;
     }
     public function mount(){
+
+        if($this->class_tag() == 0) return;
 
         $this->loadClass();
 
