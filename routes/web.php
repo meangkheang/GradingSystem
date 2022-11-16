@@ -70,6 +70,8 @@ Route::group([],function(){
         Route::get('/request_students',[AdminController::class,'request_students'])->name('request_students');
         Route::post('/request_students',[AdminController::class,'store_request_students'])->name('store_request_students');
         Route::get('/teachers',[AdminController::class,'teachers'])->name('teachers');
+        Route::get('/students',[AdminController::class,'students'])->name('students');
+
 
 
         Route::group(['prefix' => 'classes' , 'as' => 'classes.'],function(){
@@ -80,7 +82,6 @@ Route::group([],function(){
             Route::post('/create',[\App\Http\Controllers\Admin\ClassController::class,'store'])->name('store');
 
         });
-        
 
 
         //users route

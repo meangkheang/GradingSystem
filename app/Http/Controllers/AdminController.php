@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RequestStudent;
 use App\Models\Student;
+use App\Models\UserType;
+use App\Models\SubjectClass;
 use Illuminate\Http\Request;
+use App\Models\RequestStudent;
 
 class AdminController extends Controller
 {
@@ -25,7 +27,12 @@ class AdminController extends Controller
     public function index()
     {
         $this->AuthorizeUser();
-        return view('partial.admin.dashboard');
+
+        $teachers = UserType::where('type_id',2)->get();
+        $students = Student::all();
+        $classes = SubjectClass::all();
+
+        return view('partial.admin.dashboard',compact('teachers','students','classes'));
     }
 
     /**
@@ -100,14 +107,21 @@ class AdminController extends Controller
 
         return view('partial.admin.users');
     }
-
     public function teachers()
     {
         $this->AuthorizeUser();
         
-        return view('partial.admin.teachers');
+        $teachers = UserType::where('type_id',2)->get();
+        return view('partial.admin.teachers',compact('teachers'));
     }
 
+    public function students()
+    {
+        $this->AuthorizeUser();
+        
+        $students = Student::all();
+        return view('partial.admin.students',compact('students'));
+    }
 
     public function request_students()
     {

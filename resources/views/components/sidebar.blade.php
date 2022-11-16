@@ -81,7 +81,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="{{ route('admin.students') }}"
                                 class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                 <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -91,7 +91,7 @@
                                 <span class="ml-3 flex-1 whitespace-nowrap">Students</span>
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="#"
                                 class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group ">
                                 <svg class="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
@@ -101,7 +101,7 @@
                                 </svg>
                                 <span class="ml-3 flex-1 whitespace-nowrap">View Score</span>
                             </a>
-                        </li>
+                        </li> --}}
                     @endif
 
                     {{-- if teacher loggin --}}

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use App\Models\Subject;
+use App\Models\UserType;
 use App\Models\StudentClass;
 use App\Models\SubjectClass;
 use Illuminate\Http\Request;
@@ -57,8 +59,10 @@ class TeacherController extends Controller
         }
 
         $student_count = 0;
+
+       
+
         return view('partial.teacher.dashboard',compact('classes','all_student'));
-        
     }
 
     public function students(){
